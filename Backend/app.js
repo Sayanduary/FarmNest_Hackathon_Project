@@ -18,6 +18,14 @@ app.use(helmet({
 }))
 
 import userRouter from './routes/user.route.js';
+import categoryRouter from './routes/category.route.js'
+import uploadRouter from './routes/upload.router.js'
+import subCategoryRouter from './routes/subCategory.route.js'
+import productRouter from './routes/product.route.js'
+import cartRouter from './routes/cart.route.js'
+import addressRouter from './routes/address.route.js'
+import orderRouter from './routes/order.route.js'
+
 
 app.use('/api/user', userRouter);
 app.use("/api/category",categoryRouter)
