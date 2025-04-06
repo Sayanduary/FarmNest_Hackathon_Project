@@ -1,20 +1,25 @@
 import express from 'express'
 import cors from 'cors';
 import cookieParser from 'cookie-parser'
+import morgan from 'morgan'
+import helmet from 'helmet'
 
 const app = express();
 
 app.use(cors({
-  origin: process.env.CORS_ORIGIN,
   credentials: true,
+  origin: process.env.FRONTEND_URL
+}))
+app.use(express.json())
+app.use(cookieParser())
+app.use(morgan())
+app.use(helmet({
+  crossOriginResourcePolicy: false
 }))
 
+import userRouter from './routes/user.route.js';
 
-app.use(express.json({ limit: "16kb" }))
-app.use(express.urlencoded({ extended: true, limit: "16kb" }))
-app.use(express.static("public"))
-app.use(cookieParser());
-
+app.use('/api/user', userRouter);
 
 
 
