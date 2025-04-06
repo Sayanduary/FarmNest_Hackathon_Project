@@ -8,7 +8,7 @@ import { BsCart4 } from "react-icons/bs";
 import { useSelector } from 'react-redux';
 import { GoTriangleDown, GoTriangleUp  } from "react-icons/go";
 import UserMenu from './UserMenu';
-import { DisplayPriceInRupees } from '../utils/DisplayPriceInRupees';
+import { DisplayPriceInRupees } from '../Utils/DisplayPriceInRupees';
 import { useGlobalContext } from '../provider/GlobalProvider';
 import DisplayCartItem from './DisplayCartItem';
 

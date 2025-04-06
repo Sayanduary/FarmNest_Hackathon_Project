@@ -4,11 +4,11 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import toast, { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react';
-import fetchUserDetails from './utils/fetchUserDetails';
+import fetchUserDetails from './Utils/fetchUserDetails';
 import { setUserDetails } from './store/userSlice';
 import { setAllCategory,setAllSubCategory,setLoadingCategory } from './store/productSlice';
 import { useDispatch } from 'react-redux';
-import Axios from './utils/Axios';
+import Axios from './Utils/Axios';
 import SummaryApi from './common/SummaryApi';
 import { handleAddItemCart } from './store/cartProduct'
 import GlobalProvider from './provider/GlobalProvider';
