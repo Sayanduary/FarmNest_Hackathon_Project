@@ -1,31 +1,29 @@
-import { Resend } from 'resend';
-import dotenv from 'dotenv'
-dotenv.config()
-
-
-if (!process.env.RESEND_API) {
-  console.log("Provide RESEND_API in side the .env file")
-}
-
-const resend = new Resend(process.env.RESEND_API);
+// utils/sendEmail.js (or wherever it is)
+import nodemailer from 'nodemailer';
 
 const sendEmail = async ({ sendTo, subject, html }) => {
   try {
-    const { data, error } = await resend.emails.send({
-      from: 'Farmnest <onboarding@resend.dev>',
-      to: sendTo,
-      subject: subject,
-      html: html,
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASS,
+      },
+      tls: { rejectUnauthorized: false },
     });
 
-    if (error) {
-      return console.error({ error });
-    }
+    const mailOptions = {
+      from: `"FarmNest" <${process.env.EMAIL}>`,
+      to: sendTo, // ✅ Fix here
+      subject,
+      html,
+    };
 
-    return data
+    const info = await transporter.sendMail(mailOptions);
+    console.log("✅ Email sent:", info.response);
   } catch (error) {
-    console.log(error)
+    console.error("❌ Failed to send email:", error);
   }
-}
+};
 
-export default sendEmail
+export default sendEmail;

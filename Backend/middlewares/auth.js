@@ -1,36 +1,55 @@
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
-const auth = async(request,response,next)=>{
+const auth = async (request, response, next) => {
     try {
-        const token = request.cookies.accessToken || request?.headers?.authorization?.split(" ")[1]
-       
-        if(!token){
+        // Extract token from either cookies or header
+        const token = request.cookies.accessToken ||
+            (request.headers.authorization &&
+                request.headers.authorization.startsWith('Bearer ') &&
+                request.headers.authorization.split(' ')[1]);
+
+        // Check if token exists
+        if (!token) {
             return response.status(401).json({
-                message : "Provide token"
-            })
+                message: 'Authentication token required',
+                error: true,
+                success: false
+            });
         }
 
-        const decode = await jwt.verify(token,process.env.SECRET_KEY_ACCESS_TOKEN)
-
-        if(!decode){
+        // Verify token
+        let decoded;
+        try {
+            decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        } catch (err) {
             return response.status(401).json({
-                message : "unauthorized access",
-                error : true,
-                success : false
-            })
+                message: 'Invalid or expired token',
+                error: true,
+                success: false
+            });
         }
 
-        request.userId = decode.id
+        // Verify decoded payload has required fields
+        if (!decoded.id) {
+            return response.status(401).json({
+                message: 'Invalid token payload',
+                error: true,
+                success: false
+            });
+        }
 
-        next()
+        // Attach user ID to request
+        request.userId = decoded.id;
+        next();
 
     } catch (error) {
         return response.status(500).json({
-            message : "You have not login",///error.message || error,
-            error : true,
-            success : false
-        })
+            message: 'Authentication error',
+            error: true,
+            success: false,
+            details: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
     }
-}
+};
 
-export default auth
+export default auth;

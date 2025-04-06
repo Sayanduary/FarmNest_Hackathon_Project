@@ -20,7 +20,13 @@ app.use(helmet({
 import userRouter from './routes/user.route.js';
 
 app.use('/api/user', userRouter);
-
+app.use("/api/category",categoryRouter)
+app.use("/api/file",uploadRouter)
+app.use("/api/subcategory",subCategoryRouter)
+app.use("/api/product",productRouter)
+app.use("/api/cart",cartRouter)
+app.use("/api/address",addressRouter)
+app.use('/api/order',orderRouter)
 
 
 export { app }
