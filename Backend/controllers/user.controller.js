@@ -1,7 +1,6 @@
 import sendEmail from '../config/sendEmail.js'
 import UserModel from '../models/user.model.js'
 import bcryptjs from 'bcryptjs'
-import verifyEmailTemplate from '../utils/verifyEmailTemplate.js'
 import forgotPasswordTemplate from '../utils/forgotPasswordTemplate.js'
 import generatedOtp from '../utils/generatedOtp.js'
 import uploadImageToCloudinary from '../utils/uploadImageClodinary.js'
